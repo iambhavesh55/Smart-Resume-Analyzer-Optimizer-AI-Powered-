@@ -11,8 +11,7 @@ export class ChartRenderer {
         // Access Chart from global window object (UMD exposes it there)
         this.Chart = window.Chart;
         
-        // Register required components
-        this.Chart.register(...this.Chart.registerables);
+        // UMD bundle automatically registers all components, no need for explicit registration
     }
 
     async renderScoreChart(analysis) {
