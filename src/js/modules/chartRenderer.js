@@ -7,7 +7,7 @@ export class ChartRenderer {
     async initializeChart() {
         // Import Chart.js
         const ChartJS = await import('https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js');
-        this.Chart = ChartJS.default;
+        this.Chart = ChartJS;
         
         // Register required components
         this.Chart.register(...this.Chart.registerables);
