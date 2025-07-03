@@ -7,13 +7,13 @@ export class ResumeParser {
     async initializePdfJs() {
         try {
             // Import PDF.js library
-            const pdfjsModule = await import('https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js');
+            await import('https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js');
             
-            // Access the correct property from the module
-            this.pdfjsLib = pdfjsModule.default || pdfjsModule;
+            // Access the library from the global window object
+            this.pdfjsLib = window.pdfjsLib;
             
             // Set worker source
-            if (this.pdfjsLib.GlobalWorkerOptions) {
+            if (this.pdfjsLib && this.pdfjsLib.GlobalWorkerOptions) {
                 this.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
             }
         } catch (error) {
