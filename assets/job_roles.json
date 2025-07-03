@@ -1,0 +1,61 @@
+{
+  "Software Engineer": {
+    "description": "Develop and maintain software applications using various programming languages and frameworks. Work collaboratively in agile teams to deliver high-quality software solutions.",
+    "required_skills": [
+      "Python", "Java", "JavaScript", "C++", "Git", "SQL", "HTML", "CSS",
+      "React", "Node.js", "API Development", "Database Design", "Testing",
+      "Debugging", "Agile", "Problem Solving", "Team Collaboration"
+    ],
+    "preferred_skills": [
+      "Docker", "Kubernetes", "AWS", "Machine Learning", "DevOps",
+      "Microservices", "GraphQL", "TypeScript", "MongoDB", "Redis"
+    ],
+    "keywords": [
+      "software development", "programming", "coding", "algorithms",
+      "data structures", "version control", "code review", "deployment",
+      "scalability", "performance optimization", "software architecture"
+    ],
+    "experience_level": "2-5 years",
+    "salary_range": "$70,000 - $120,000"
+  },
+  "Data Scientist": {
+    "description": "Analyze complex datasets to extract meaningful insights and build predictive models. Use statistical methods and machine learning to solve business problems.",
+    "required_skills": [
+      "Python", "R", "SQL", "Machine Learning", "Statistics", "Pandas",
+      "NumPy", "Scikit-learn", "Data Visualization", "Jupyter", "Excel",
+      "Problem Solving", "Critical Thinking", "Communication"
+    ],
+    "preferred_skills": [
+      "TensorFlow", "PyTorch", "Deep Learning", "NLP", "Big Data",
+      "Spark", "Hadoop", "Tableau", "Power BI", "A/B Testing",
+      "Feature Engineering", "Model Deployment", "Cloud Platforms"
+    ],
+    "keywords": [
+      "data analysis", "predictive modeling", "statistical analysis",
+      "data mining", "business intelligence", "data pipeline",
+      "feature selection", "model validation", "data cleaning"
+    ],
+    "experience_level": "2-6 years",
+    "salary_range": "$80,000 - $140,000"
+  },
+  "Product Manager": {
+    "description": "Lead product development from conception to launch. Define product strategy, gather requirements, and coordinate with cross-functional teams.",
+    "required_skills": [
+      "Product Strategy", "Market Research", "User Experience", "Analytics",
+      "Project Management", "Communication", "Leadership", "Stakeholder Management",
+      "Agile", "Scrum", "Data Analysis", "Problem Solving"
+    ],
+    "preferred_skills": [
+      "SQL", "A/B Testing", "Wireframing", "Prototyping", "Customer Development",
+      "Go-to-Market Strategy", "Pricing Strategy", "Competitive Analysis",
+      "Product Marketing", "Technical Writing"
+    ],
+    "keywords": [
+      "product roadmap", "user stories", "market analysis", "product launch",
+      "customer feedback", "product metrics", "cross-functional teams",
+      "product vision", "requirements gathering", "product lifecycle"
+    ],
+    "experience_level": "3-7 years",
+    "salary_range": "$90,000 - $150,000"
+  }
+}
