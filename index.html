@@ -3,265 +3,715 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Resume Analyzer & Optimizer</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📄</text></svg>">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>ResumeAI Pro - AI-Powered Resume Analysis</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Heroicons -->
+    <script src="https://unpkg.com/heroicons@2.0.18/24/outline/index.js" type="module"></script>
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
     <link rel="stylesheet" href="./src/styles/main.css">
     <link rel="stylesheet" href="./src/styles/enhanced-features.css">
     
-    <!-- Accessibility improvements -->
-    <meta name="description" content="AI-powered resume analyzer that helps job seekers optimize their resumes, generate cover letters, and prepare for interviews">
-    <meta name="keywords" content="resume analyzer, job search, career tools, interview preparation, cover letter generator">
-    <meta name="author" content="Smart Resume Analyzer">
+    <!-- Meta tags for SEO and social sharing -->
+    <meta name="description" content="Professional AI-powered resume analyzer that helps you optimize your resume for better job opportunities. Get instant feedback, skill analysis, and improvement suggestions.">
+    <meta name="keywords" content="resume analyzer, AI resume checker, job search, career tools, resume optimization">
+    <meta name="author" content="ResumeAI Pro">
     
     <!-- Open Graph meta tags -->
-    <meta property="og:title" content="Smart Resume Analyzer & Optimizer">
-    <meta property="og:description" content="AI-powered resume analysis to boost your job search success">
+    <meta property="og:title" content="ResumeAI Pro - AI-Powered Resume Analysis">
+    <meta property="og:description" content="Professional AI-powered resume analyzer that helps you optimize your resume for better job opportunities.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://endearing-cuchufli-9d1e2e.netlify.app/">
+    <meta property="og:image" content="https://images.pexels.com/photos/590016/pexels-photo-590016.jpeg?auto=compress&cs=tinysrgb&w=1200&h=630&fit=crop">
     
-    <!-- Accessibility -->
-    <meta name="theme-color" content="#667eea">
+    <!-- Theme color -->
+    <meta name="theme-color" content="#4F46E5">
 </head>
-<body>
-    <div id="app">
-        <!-- Skip to main content link for accessibility -->
-        <a href="#main-content" class="skip-link">Skip to main content</a>
-        
-        <!-- Header -->
-        <header class="header" role="banner">
-            <div class="container">
-                <div class="header-content">
-                    <div class="logo">
-                        <span class="logo-icon" role="img" aria-label="Document icon">📄</span>
-                        <h1>Smart Resume Analyzer</h1>
-                    </div>
-                    <p class="tagline">AI-Powered Resume Analysis to Boost Your Job Search Success</p>
+<body class="light-mode">
+    <!-- Skip to main content link for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Navigation -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <div class="brand-logo">
+                    <span class="logo-icon">🚀</span>
+                    <span class="brand-text">ResumeAI Pro</span>
                 </div>
             </div>
-        </header>
+            
+            <div class="nav-menu" id="navMenu">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#how-it-works" class="nav-link">How It Works</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+            
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                    <span class="theme-icon light-icon">🌙</span>
+                    <span class="theme-icon dark-icon">☀️</span>
+                </button>
+                <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
 
-        <!-- Main Content -->
-        <main class="main" role="main" id="main-content">
-            <div class="container">
-                <!-- Upload Section -->
-                <section class="upload-section" id="uploadSection" aria-labelledby="upload-heading">
-                    <div class="upload-card">
-                        <div class="upload-icon" role="img" aria-label="Upload icon">📤</div>
-                        <h2 id="upload-heading">Upload Your Resume</h2>
+    <!-- Hero Section -->
+    <section class="hero" id="home" role="banner">
+        <div class="hero-background">
+            <div class="hero-gradient"></div>
+            <div class="hero-pattern"></div>
+        </div>
+        
+        <div class="hero-container">
+            <div class="hero-content" data-aos="fade-up" data-aos-duration="800">
+                <div class="hero-badge">
+                    <span class="badge-icon">✨</span>
+                    <span>AI-Powered Resume Analysis</span>
+                </div>
+                
+                <h1 class="hero-title">
+                    Transform Your Resume with
+                    <span class="gradient-text">AI Intelligence</span>
+                </h1>
+                
+                <p class="hero-subtitle">
+                    Get instant, professional feedback on your resume. Our advanced AI analyzes your resume against job requirements and provides actionable insights to boost your career prospects.
+                </p>
+                
+                <div class="hero-stats" data-aos="fade-up" data-aos-delay="200">
+                    <div class="stat-item">
+                        <div class="stat-number">50K+</div>
+                        <div class="stat-label">Resumes Analyzed</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">95%</div>
+                        <div class="stat-label">Success Rate</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">Available</div>
+                    </div>
+                </div>
+                
+                <div class="hero-cta" data-aos="fade-up" data-aos-delay="400">
+                    <button class="cta-primary" onclick="scrollToUpload()">
+                        <span class="cta-icon">🚀</span>
+                        <span>Analyze My Resume</span>
+                        <span class="cta-arrow">→</span>
+                    </button>
+                    <button class="cta-secondary" onclick="scrollToFeatures()">
+                        <span>Learn More</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="hero-visual" data-aos="fade-left" data-aos-delay="600">
+                <div class="visual-card">
+                    <div class="card-header">
+                        <div class="card-dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <div class="card-title">Resume Analysis</div>
+                    </div>
+                    <div class="card-content">
+                        <div class="progress-item">
+                            <span>Skills Match</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 85%"></div>
+                            </div>
+                            <span>85%</span>
+                        </div>
+                        <div class="progress-item">
+                            <span>Keywords</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 72%"></div>
+                            </div>
+                            <span>72%</span>
+                        </div>
+                        <div class="progress-item">
+                            <span>Readability</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 91%"></div>
+                            </div>
+                            <span>91%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Powerful Features for Career Success</h2>
+                <p class="section-subtitle">Everything you need to create a winning resume</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-icon">
+                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">AI-Powered Analysis</h3>
+                    <p class="feature-description">Advanced algorithms analyze your resume against industry standards and job requirements.</p>
+                </div>
+                
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-icon">
+                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Instant Feedback</h3>
+                    <p class="feature-description">Get immediate insights and suggestions to improve your resume's effectiveness.</p>
+                </div>
+                
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-icon">
+                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Skill Matching</h3>
+                    <p class="feature-description">Compare your skills against job requirements and identify gaps to fill.</p>
+                </div>
+                
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="feature-icon">
+                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">ATS Optimization</h3>
+                    <p class="feature-description">Ensure your resume passes Applicant Tracking Systems with keyword optimization.</p>
+                </div>
+                
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="500">
+                    <div class="feature-icon">
+                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Industry Insights</h3>
+                    <p class="feature-description">Get tailored advice based on your target industry and role requirements.</p>
+                </div>
+                
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="600">
+                    <div class="feature-icon">
+                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Detailed Reports</h3>
+                    <p class="feature-description">Download comprehensive analysis reports to track your progress over time.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">How It Works</h2>
+                <p class="section-subtitle">Simple steps to optimize your resume</p>
+            </div>
+            
+            <div class="steps-container">
+                <div class="step-item" data-aos="fade-right" data-aos-delay="100">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Upload Your Resume</h3>
+                        <p class="step-description">Simply drag and drop your PDF resume or click to browse and upload.</p>
+                    </div>
+                    <div class="step-icon">
+                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                        </svg>
+                    </div>
+                </div>
+                
+                <div class="step-item" data-aos="fade-left" data-aos-delay="200">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Choose Job Role</h3>
+                        <p class="step-description">Select your target job role or paste a specific job description for analysis.</p>
+                    </div>
+                    <div class="step-icon">
+                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 012 2v6a2 2 0 01-2 2H8a2 2 0 01-2-2V8a2 2 0 012-2V6"></path>
+                        </svg>
+                    </div>
+                </div>
+                
+                <div class="step-item" data-aos="fade-right" data-aos-delay="300">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Get AI Analysis</h3>
+                        <p class="step-description">Our AI analyzes your resume and provides detailed insights and scores.</p>
+                    </div>
+                    <div class="step-icon">
+                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                        </svg>
+                    </div>
+                </div>
+                
+                <div class="step-item" data-aos="fade-left" data-aos-delay="400">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Implement Suggestions</h3>
+                        <p class="step-description">Apply our actionable recommendations to improve your resume's effectiveness.</p>
+                    </div>
+                    <div class="step-icon">
+                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Application -->
+    <main class="main-app" role="main" id="main-content">
+        <div class="container">
+            <!-- Progress Indicator -->
+            <div class="progress-indicator" id="progressIndicator">
+                <div class="progress-step active" data-step="upload">
+                    <div class="step-circle">
+                        <span class="step-number">1</span>
+                        <svg class="step-check" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </div>
+                    <span class="step-label">Upload</span>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step" data-step="analyze">
+                    <div class="step-circle">
+                        <span class="step-number">2</span>
+                        <svg class="step-check" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </div>
+                    <span class="step-label">Analyze</span>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step" data-step="results">
+                    <div class="step-circle">
+                        <span class="step-number">3</span>
+                        <svg class="step-check" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </div>
+                    <span class="step-label">Results</span>
+                </div>
+            </div>
+
+            <!-- Upload Section -->
+            <section class="upload-section" id="uploadSection" data-aos="fade-up">
+                <div class="upload-card">
+                    <div class="upload-header">
+                        <div class="upload-icon">
+                            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                            </svg>
+                        </div>
+                        <h2>Upload Your Resume</h2>
                         <p>Upload your PDF resume to get instant AI-powered analysis and feedback</p>
-                        
-                        <div class="upload-area" id="uploadArea" role="button" tabindex="0" 
-                             aria-label="Upload resume file area. Click to browse files or drag and drop a PDF file here">
-                            <input type="file" id="resumeFile" accept=".pdf" hidden aria-label="Resume file input">
-                            <div class="upload-content">
-                                <div class="upload-icon-large" role="img" aria-label="Document icon">📄</div>
-                                <p>Drag & drop your PDF resume here or <span class="upload-link">browse files</span></p>
-                                <small>Supports PDF files up to 10MB</small>
+                    </div>
+                    
+                    <div class="upload-area" id="uploadArea" role="button" tabindex="0" 
+                         aria-label="Upload resume file area. Click to browse files or drag and drop a PDF file here">
+                        <input type="file" id="resumeFile" accept=".pdf" hidden aria-label="Resume file input">
+                        <div class="upload-content">
+                            <div class="upload-icon-large">
+                                <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                </svg>
                             </div>
+                            <h3>Drag & drop your PDF resume here</h3>
+                            <p>or <span class="upload-link">browse files</span></p>
+                            <small>Supports PDF files up to 10MB</small>
+                        </div>
+                    </div>
+
+                    <!-- Job Role Selection -->
+                    <div class="job-selection">
+                        <h3>Select Target Job Role</h3>
+                        <div class="job-options" role="radiogroup" aria-labelledby="job-type-heading">
+                            <label class="radio-option">
+                                <input type="radio" name="jobType" value="predefined" checked>
+                                <span class="radio-custom"></span>
+                                <span>Predefined Job Role</span>
+                            </label>
+                            
+                            <label class="radio-option">
+                                <input type="radio" name="jobType" value="custom">
+                                <span class="radio-custom"></span>
+                                <span>Custom Job Description</span>
+                            </label>
                         </div>
 
-                        <!-- Job Role Selection -->
-                        <div class="job-selection">
-                            <h3>Select Target Job Role</h3>
-                            <div class="job-options" role="radiogroup" aria-labelledby="job-type-heading">
-                                <h4 id="job-type-heading" class="sr-only">Job analysis type</h4>
-                                <label class="radio-option">
-                                    <input type="radio" name="jobType" value="predefined" checked aria-describedby="predefined-desc">
-                                    <span>Predefined Job Role</span>
-                                </label>
-                                <span id="predefined-desc" class="sr-only">Choose from common job roles with predefined requirements</span>
-                                
-                                <label class="radio-option">
-                                    <input type="radio" name="jobType" value="custom" aria-describedby="custom-desc">
-                                    <span>Custom Job Description</span>
-                                </label>
-                                <span id="custom-desc" class="sr-only">Paste a specific job description for targeted analysis</span>
-                            </div>
-
-                            <div class="job-role-selector" id="predefinedRoles">
-                                <label for="jobRoleSelect" class="sr-only">Select job role</label>
-                                <select id="jobRoleSelect" aria-label="Select target job role">
-                                    <option value="software-engineer">Software Engineer</option>
-                                    <option value="data-scientist">Data Scientist</option>
-                                    <option value="product-manager">Product Manager</option>
-                                    <option value="marketing-manager">Marketing Manager</option>
-                                    <option value="business-analyst">Business Analyst</option>
-                                    <option value="ui-ux-designer">UI/UX Designer</option>
-                                    <option value="devops-engineer">DevOps Engineer</option>
-                                    <option value="project-manager">Project Manager</option>
-                                </select>
-                            </div>
-
-                            <div class="custom-job-input" id="customJobInput" style="display: none;">
-                                <label for="jobDescription" class="sr-only">Job description</label>
-                                <textarea id="jobDescription" placeholder="Paste the complete job description here..." rows="6" 
-                                         aria-label="Enter custom job description"></textarea>
-                            </div>
+                        <div class="job-role-selector" id="predefinedRoles">
+                            <select id="jobRoleSelect" aria-label="Select target job role">
+                                <option value="software-engineer">Software Engineer</option>
+                                <option value="data-scientist">Data Scientist</option>
+                                <option value="product-manager">Product Manager</option>
+                                <option value="marketing-manager">Marketing Manager</option>
+                                <option value="business-analyst">Business Analyst</option>
+                                <option value="ui-ux-designer">UI/UX Designer</option>
+                                <option value="devops-engineer">DevOps Engineer</option>
+                                <option value="project-manager">Project Manager</option>
+                            </select>
                         </div>
 
-                        <button class="analyze-btn" id="analyzeBtn" disabled aria-describedby="analyze-btn-desc">
-                            <span class="btn-icon" role="img" aria-label="Rocket icon">🚀</span>
-                            Analyze Resume
+                        <div class="custom-job-input" id="customJobInput" style="display: none;">
+                            <textarea id="jobDescription" placeholder="Paste the complete job description here..." rows="6"></textarea>
+                        </div>
+                    </div>
+
+                    <button class="analyze-btn" id="analyzeBtn" disabled>
+                        <span class="btn-icon">🚀</span>
+                        <span>Analyze Resume</span>
+                        <span class="btn-arrow">→</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Loading Section -->
+            <section class="loading-section" id="loadingSection" style="display: none;">
+                <div class="loading-card">
+                    <div class="loading-animation">
+                        <div class="loading-spinner"></div>
+                        <div class="loading-pulse"></div>
+                    </div>
+                    <h3>Analyzing Your Resume...</h3>
+                    <p>Our AI is examining your resume and comparing it with job requirements</p>
+                    <div class="loading-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="loadingProgress"></div>
+                        </div>
+                        <span class="progress-text" id="progressText">0%</span>
+                    </div>
+                    <div class="loading-steps">
+                        <div class="step active">📄 Extracting text from PDF</div>
+                        <div class="step">🔍 Analyzing content structure</div>
+                        <div class="step">🎯 Matching skills and keywords</div>
+                        <div class="step">📊 Generating insights</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section class="results-section" id="resultsSection" style="display: none;">
+                <div class="results-header">
+                    <div class="results-title">
+                        <h2>📊 Analysis Results</h2>
+                        <p>Here's how your resume performs</p>
+                    </div>
+                    <div class="results-actions">
+                        <button class="btn-secondary" id="shareResultsBtn">
+                            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"></path>
+                            </svg>
+                            <span>Share Results</span>
                         </button>
-                        <span id="analyze-btn-desc" class="sr-only">Start AI-powered analysis of your resume against the selected job requirements</span>
+                        <button class="btn-primary" id="newAnalysisBtn">
+                            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                            </svg>
+                            <span>New Analysis</span>
+                        </button>
                     </div>
-                </section>
+                </div>
 
-                <!-- Loading Section -->
-                <section class="loading-section" id="loadingSection" style="display: none;" aria-labelledby="loading-heading">
-                    <div class="loading-card">
-                        <div class="loading-spinner" role="status" aria-label="Loading"></div>
-                        <h3 id="loading-heading">Analyzing Your Resume...</h3>
-                        <p>Our AI is examining your resume and comparing it with job requirements</p>
-                        <div class="loading-steps" role="status" aria-live="polite">
-                            <div class="step active">📄 Extracting text from PDF</div>
-                            <div class="step">🔍 Analyzing content structure</div>
-                            <div class="step">🎯 Matching skills and keywords</div>
-                            <div class="step">📊 Generating insights</div>
+                <!-- Score Cards -->
+                <div class="score-cards">
+                    <div class="score-card primary">
+                        <div class="score-header">
+                            <div class="score-icon">
+                                <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <div class="score-trend">
+                                <span class="trend-icon">📈</span>
+                                <span class="trend-text">+12%</span>
+                            </div>
+                        </div>
+                        <div class="score-value" id="overallScore">0</div>
+                        <div class="score-label">Overall Score</div>
+                        <div class="score-subtitle">out of 100</div>
+                        <div class="score-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="overallProgress"></div>
+                            </div>
                         </div>
                     </div>
-                </section>
+                    
+                    <div class="score-card">
+                        <div class="score-header">
+                            <div class="score-icon">
+                                <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="score-value" id="skillMatch">0%</div>
+                        <div class="score-label">Skill Match</div>
+                        <div class="score-subtitle">vs requirements</div>
+                    </div>
+                    
+                    <div class="score-card">
+                        <div class="score-header">
+                            <div class="score-icon">
+                                <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="score-value" id="keywordsFound">0</div>
+                        <div class="score-label">Keywords Found</div>
+                        <div class="score-subtitle">relevant terms</div>
+                    </div>
+                    
+                    <div class="score-card">
+                        <div class="score-header">
+                            <div class="score-icon">
+                                <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="score-value" id="readabilityScore">0</div>
+                        <div class="score-label">Readability</div>
+                        <div class="score-subtitle">clarity score</div>
+                    </div>
+                </div>
 
-                <!-- Results Section -->
-                <section class="results-section" id="resultsSection" style="display: none;" aria-labelledby="results-heading">
-                    <div class="results-header">
-                        <h2 id="results-heading">📊 Analysis Results</h2>
-                        <button class="new-analysis-btn" id="newAnalysisBtn" aria-label="Start new resume analysis">
-                            <span role="img" aria-label="Refresh icon">🔄</span>
-                            New Analysis
+                <!-- Analysis Tabs -->
+                <div class="analysis-tabs">
+                    <div class="tab-buttons" role="tablist">
+                        <button class="tab-btn active" data-tab="skills" role="tab" aria-selected="true">
+                            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                            </svg>
+                            <span>Skills Analysis</span>
+                        </button>
+                        <button class="tab-btn" data-tab="suggestions" role="tab" aria-selected="false">
+                            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                            </svg>
+                            <span>Suggestions</span>
+                        </button>
+                        <button class="tab-btn" data-tab="insights" role="tab" aria-selected="false">
+                            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                            </svg>
+                            <span>Insights</span>
+                        </button>
+                        <button class="tab-btn" data-tab="report" role="tab" aria-selected="false">
+                            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                            <span>Report</span>
                         </button>
                     </div>
 
-                    <!-- Score Cards -->
-                    <div class="score-cards" role="region" aria-labelledby="scores-heading">
-                        <h3 id="scores-heading" class="sr-only">Resume analysis scores</h3>
-                        <div class="score-card primary" role="img" aria-labelledby="overall-score-label">
-                            <div class="score-value" id="overallScore">0</div>
-                            <div class="score-label" id="overall-score-label">Overall Score</div>
-                            <div class="score-subtitle">out of 100</div>
+                    <!-- Skills Tab -->
+                    <div class="tab-content active" id="skillsTab" role="tabpanel">
+                        <div class="skills-analysis">
+                            <div class="skills-column">
+                                <div class="skills-header">
+                                    <h3 class="skills-title success">
+                                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                        Matched Skills
+                                    </h3>
+                                    <span class="skills-count" id="matchedSkillsCount">0</span>
+                                </div>
+                                <div class="skills-list" id="matchedSkills"></div>
+                            </div>
+                            <div class="skills-column">
+                                <div class="skills-header">
+                                    <h3 class="skills-title danger">
+                                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                        </svg>
+                                        Missing Skills
+                                    </h3>
+                                    <span class="skills-count" id="missingSkillsCount">0</span>
+                                </div>
+                                <div class="skills-list" id="missingSkills"></div>
+                            </div>
                         </div>
-                        <div class="score-card" role="img" aria-labelledby="skill-match-label">
-                            <div class="score-value" id="skillMatch">0%</div>
-                            <div class="score-label" id="skill-match-label">Skill Match</div>
-                            <div class="score-subtitle">vs requirements</div>
-                        </div>
-                        <div class="score-card" role="img" aria-labelledby="keywords-found-label">
-                            <div class="score-value" id="keywordsFound">0</div>
-                            <div class="score-label" id="keywords-found-label">Keywords Found</div>
-                            <div class="score-subtitle">relevant terms</div>
-                        </div>
-                        <div class="score-card" role="img" aria-labelledby="readability-label">
-                            <div class="score-value" id="readabilityScore">0</div>
-                            <div class="score-label" id="readability-label">Readability</div>
-                            <div class="score-subtitle">clarity score</div>
+
+                        <div class="keywords-analysis">
+                            <h3>🔍 Keywords Analysis</h3>
+                            <div class="keywords-grid">
+                                <div class="keywords-section">
+                                    <h4>Found Keywords</h4>
+                                    <div class="keywords-tags" id="foundKeywords"></div>
+                                </div>
+                                <div class="keywords-section">
+                                    <h4>Missing Keywords</h4>
+                                    <div class="keywords-tags" id="missingKeywords"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Analysis Tabs -->
-                    <div class="analysis-tabs">
-                        <div class="tab-buttons" role="tablist" aria-label="Analysis sections">
-                            <button class="tab-btn active" data-tab="skills" role="tab" aria-selected="true" aria-controls="skillsTab">🎯 Skills Analysis</button>
-                            <button class="tab-btn" data-tab="suggestions" role="tab" aria-selected="false" aria-controls="suggestionsTab">💡 Suggestions</button>
-                            <button class="tab-btn" data-tab="insights" role="tab" aria-selected="false" aria-controls="insightsTab">📈 Insights</button>
-                            <button class="tab-btn" data-tab="report" role="tab" aria-selected="false" aria-controls="reportTab">📄 Report</button>
-                        </div>
+                    <!-- Suggestions Tab -->
+                    <div class="tab-content" id="suggestionsTab" role="tabpanel">
+                        <div class="suggestions-container" id="suggestionsContainer"></div>
+                    </div>
 
-                        <!-- Skills Tab -->
-                        <div class="tab-content active" id="skillsTab" role="tabpanel" aria-labelledby="skills-tab">
-                            <div class="skills-analysis">
-                                <div class="skills-column">
-                                    <h3 class="skills-title success">✅ Matched Skills</h3>
-                                    <div class="skills-list" id="matchedSkills" role="list" aria-label="Skills found in your resume">
-                                        <!-- Matched skills will be populated here -->
-                                    </div>
-                                </div>
-                                <div class="skills-column">
-                                    <h3 class="skills-title danger">❌ Missing Skills</h3>
-                                    <div class="skills-list" id="missingSkills" role="list" aria-label="Skills missing from your resume">
-                                        <!-- Missing skills will be populated here -->
-                                    </div>
-                                </div>
+                    <!-- Insights Tab -->
+                    <div class="tab-content" id="insightsTab" role="tabpanel">
+                        <div class="insights-container">
+                            <div class="chart-container">
+                                <h3>Score Breakdown</h3>
+                                <canvas id="scoreChart" width="400" height="200"></canvas>
                             </div>
-
-                            <div class="keywords-analysis">
-                                <h3>🔍 Keywords Analysis</h3>
-                                <div class="keywords-grid">
-                                    <div class="keywords-section">
-                                        <h4>Found Keywords</h4>
-                                        <div class="keywords-tags" id="foundKeywords" role="list" aria-label="Keywords found in your resume"></div>
-                                    </div>
-                                    <div class="keywords-section">
-                                        <h4>Missing Keywords</h4>
-                                        <div class="keywords-tags" id="missingKeywords" role="list" aria-label="Keywords missing from your resume"></div>
-                                    </div>
-                                </div>
-                            </div>
+                            <div class="section-analysis" id="sectionAnalysis"></div>
                         </div>
+                    </div>
 
-                        <!-- Suggestions Tab -->
-                        <div class="tab-content" id="suggestionsTab" role="tabpanel" aria-labelledby="suggestions-tab">
-                            <div class="suggestions-container" id="suggestionsContainer">
-                                <!-- Suggestions will be populated here -->
-                            </div>
-                        </div>
-
-                        <!-- Insights Tab -->
-                        <div class="tab-content" id="insightsTab" role="tabpanel" aria-labelledby="insights-tab">
-                            <div class="insights-container">
-                                <div class="chart-container">
-                                    <h3>Score Breakdown</h3>
-                                    <canvas id="scoreChart" width="400" height="200" aria-label="Resume score breakdown chart"></canvas>
-                                </div>
-                                <div class="section-analysis" id="sectionAnalysis">
-                                    <!-- Section analysis will be populated here -->
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Report Tab -->
-                        <div class="tab-content" id="reportTab" role="tabpanel" aria-labelledby="report-tab">
-                            <div class="report-container">
+                    <!-- Report Tab -->
+                    <div class="tab-content" id="reportTab" role="tabpanel">
+                        <div class="report-container">
+                            <div class="report-header">
                                 <h3>📄 Generate Report</h3>
                                 <p>Download a comprehensive analysis report of your resume</p>
-                                
-                                <div class="report-options">
-                                    <button class="report-btn" id="downloadPdfBtn" aria-describedby="pdf-btn-desc">
-                                        <span role="img" aria-label="Download icon">📥</span>
-                                        Download PDF Report
-                                    </button>
-                                    <span id="pdf-btn-desc" class="sr-only">Download a PDF version of your resume analysis</span>
-                                    
-                                    <button class="report-btn secondary" id="copyReportBtn" aria-describedby="copy-btn-desc">
-                                        <span role="img" aria-label="Copy icon">📋</span>
-                                        Copy Text Summary
-                                    </button>
-                                    <span id="copy-btn-desc" class="sr-only">Copy the analysis summary to clipboard</span>
-                                </div>
-
-                                <div class="report-preview" id="reportPreview" aria-label="Report preview">
-                                    <!-- Report preview will be shown here -->
-                                </div>
                             </div>
+                            
+                            <div class="report-options">
+                                <button class="report-btn" id="downloadPdfBtn">
+                                    <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                    </svg>
+                                    <span>Download PDF Report</span>
+                                </button>
+                                
+                                <button class="report-btn secondary" id="copyReportBtn">
+                                    <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                    </svg>
+                                    <span>Copy Text Summary</span>
+                                </button>
+                            </div>
+
+                            <div class="report-preview" id="reportPreview"></div>
                         </div>
                     </div>
-                </section>
-            </div>
-        </main>
+                </div>
+            </section>
+        </div>
+    </main>
 
-        <!-- Footer -->
-        <footer class="footer" role="contentinfo">
-            <div class="container">
-                <p>&copy; 2025 Smart Resume Analyzer. Built with ❤️ for job seekers worldwide.</p>
-                <p>
-                    <button onclick="window.userFeedback?.openFeedbackModal('general', 'footer')" 
-                            class="feedback-link" aria-label="Provide feedback about this application">
-                        📝 Give Feedback
-                    </button>
-                </p>
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-brand">
+                        <div class="brand-logo">
+                            <span class="logo-icon">🚀</span>
+                            <span class="brand-text">ResumeAI Pro</span>
+                        </div>
+                        <p class="footer-description">
+                            Professional AI-powered resume analysis to boost your career prospects.
+                        </p>
+                        <div class="social-links">
+                            <a href="#" aria-label="GitHub">
+                                <svg class="icon" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                                </svg>
+                            </a>
+                            <a href="#" aria-label="LinkedIn">
+                                <svg class="icon" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                                </svg>
+                            </a>
+                            <a href="#" aria-label="Twitter">
+                                <svg class="icon" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">API</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><button onclick="window.userFeedback?.openFeedbackModal('general', 'footer')" class="feedback-link">Give Feedback</button></li>
+                    </ul>
+                </div>
             </div>
-        </footer>
-    </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 ResumeAI Pro. All rights reserved. Built with ❤️ for job seekers worldwide.</p>
+                <div class="footer-links">
+                    <a href="#">Privacy</a>
+                    <a href="#">Terms</a>
+                    <a href="#">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
 
     <!-- Live regions for screen reader announcements -->
     <div id="live-region" aria-live="polite" aria-atomic="true" class="sr-only"></div>

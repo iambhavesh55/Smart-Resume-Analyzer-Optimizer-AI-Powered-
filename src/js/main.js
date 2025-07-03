@@ -20,6 +20,7 @@ class SmartResumeAnalyzer {
         this.coverLetterGenerator = new CoverLetterGenerator();
         this.interviewPrep = new InterviewPrep();
         this.userFeedback = new UserFeedback();
+        this.accessibilityManager = new AccessibilityManager();
         
         this.currentAnalysis = null;
         this.currentResumeText = '';
@@ -30,11 +31,17 @@ class SmartResumeAnalyzer {
 
     initializeApp() {
         this.initializeEventListeners();
-        this.setupEnhancedFeatures();
+        this.initializeTheme();
+        this.initializeAnimations();
+        this.initializeNavigation();
         this.addFeedbackModal();
         
         // Make feedback system globally available
         window.userFeedback = this.userFeedback;
+        
+        // Add global scroll functions
+        window.scrollToUpload = this.scrollToUpload.bind(this);
+        window.scrollToFeatures = this.scrollToFeatures.bind(this);
     }
 
     initializeEventListeners() {
@@ -88,7 +95,7 @@ class SmartResumeAnalyzer {
         const tabButtons = document.querySelectorAll('.tab-btn');
         tabButtons.forEach(btn => {
             btn.addEventListener('click', (e) => {
-                this.switchTab(e.target.dataset.tab);
+                this.switchTab(e.target.dataset.tab || e.target.closest('.tab-btn').dataset.tab);
             });
         });
 
@@ -99,168 +106,171 @@ class SmartResumeAnalyzer {
         document.getElementById('downloadPdfBtn')?.addEventListener('click', this.downloadPdfReport.bind(this));
         document.getElementById('copyReportBtn')?.addEventListener('click', this.copyTextReport.bind(this));
 
-        // Enhanced features navigation
-        this.setupEnhancedNavigation();
+        // Share results button
+        document.getElementById('shareResultsBtn')?.addEventListener('click', this.shareResults.bind(this));
     }
 
-    setupEnhancedNavigation() {
-        // Add navigation for enhanced features
-        const header = document.querySelector('.header-content');
-        if (header) {
-            const nav = document.createElement('nav');
-            nav.className = 'enhanced-nav';
-            nav.innerHTML = `
-                <div class="nav-buttons">
-                    <button class="nav-btn active" data-feature="analyzer">📊 Analyzer</button>
-                    <button class="nav-btn" data-feature="builder">📝 Builder</button>
-                    <button class="nav-btn" data-feature="cover-letter">📄 Cover Letter</button>
-                    <button class="nav-btn" data-feature="interview">🎯 Interview Prep</button>
-                </div>
-            `;
-            header.appendChild(nav);
+    initializeTheme() {
+        const themeToggle = document.getElementById('themeToggle');
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        
+        document.body.className = savedTheme + '-mode';
+        
+        themeToggle?.addEventListener('click', () => {
+            const currentTheme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.body.className = newTheme + '-mode';
+            localStorage.setItem('theme', newTheme);
+            
+            // Announce theme change to screen readers
+            this.announceToScreenReader(`Switched to ${newTheme} mode`);
+        });
+    }
 
-            // Add navigation event listeners
-            nav.addEventListener('click', (e) => {
-                if (e.target.classList.contains('nav-btn')) {
-                    this.switchFeature(e.target.dataset.feature);
-                    
-                    // Update active state
-                    nav.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-                    e.target.classList.add('active');
-                }
+    initializeAnimations() {
+        // Initialize AOS (Animate On Scroll)
+        if (typeof AOS !== 'undefined') {
+            AOS.init({
+                duration: 800,
+                easing: 'ease-out-cubic',
+                once: true,
+                offset: 100
             });
         }
+
+        // Add intersection observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.score-card, .feature-card, .step-item').forEach(el => {
+            observer.observe(el);
+        });
     }
 
-    setupEnhancedFeatures() {
-        // Create containers for enhanced features
-        const main = document.querySelector('.main .container');
-        if (main) {
-            // Resume Builder
-            const builderSection = document.createElement('section');
-            builderSection.id = 'builderSection';
-            builderSection.className = 'feature-section';
-            builderSection.style.display = 'none';
-            builderSection.innerHTML = this.resumeBuilder.createBuilderInterface();
-            main.appendChild(builderSection);
+    initializeNavigation() {
+        // Mobile navigation toggle
+        const navToggle = document.getElementById('navToggle');
+        const navMenu = document.getElementById('navMenu');
 
-            // Cover Letter Generator
-            const coverLetterSection = document.createElement('section');
-            coverLetterSection.id = 'coverLetterSection';
-            coverLetterSection.className = 'feature-section';
-            coverLetterSection.style.display = 'none';
-            coverLetterSection.innerHTML = this.coverLetterGenerator.createCoverLetterInterface();
-            main.appendChild(coverLetterSection);
+        navToggle?.addEventListener('click', () => {
+            navMenu?.classList.toggle('active');
+            navToggle.classList.toggle('active');
+        });
 
-            // Interview Prep
-            const interviewSection = document.createElement('section');
-            interviewSection.id = 'interviewSection';
-            interviewSection.className = 'feature-section';
-            interviewSection.style.display = 'none';
-            interviewSection.innerHTML = this.interviewPrep.createInterviewPrepInterface();
-            main.appendChild(interviewSection);
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+                
+                // Close mobile menu
+                navMenu?.classList.remove('active');
+                navToggle?.classList.remove('active');
+            });
+        });
 
-            // Initialize enhanced features
-            this.initializeEnhancedFeatures();
-        }
+        // Update active nav link on scroll
+        window.addEventListener('scroll', this.updateActiveNavLink.bind(this));
     }
 
-    initializeEnhancedFeatures() {
-        // Initialize Resume Builder
-        this.resumeBuilder.initializeBuilder();
-
-        // Cover Letter Generator events
-        document.getElementById('generateCoverLetterBtn')?.addEventListener('click', this.generateCoverLetter.bind(this));
-
-        // Interview Prep events
-        document.getElementById('generateQuestionsBtn')?.addEventListener('click', this.generateInterviewQuestions.bind(this));
+    updateActiveNavLink() {
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link');
         
-        // Practice mode events
-        document.getElementById('startPracticeBtn')?.addEventListener('click', this.startInterviewPractice.bind(this));
-        document.getElementById('nextQuestionBtn')?.addEventListener('click', this.nextPracticeQuestion.bind(this));
+        let current = '';
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (window.scrollY >= sectionTop - 200) {
+                current = section.getAttribute('id');
+            }
+        });
 
-        // Tab switching for enhanced features
-        document.addEventListener('click', (e) => {
-            if (e.target.classList.contains('tab-btn')) {
-                const tabName = e.target.dataset.tab;
-                this.switchEnhancedTab(e.target, tabName);
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${current}`) {
+                link.classList.add('active');
             }
         });
     }
 
+    scrollToUpload() {
+        const uploadSection = document.getElementById('uploadSection');
+        if (uploadSection) {
+            uploadSection.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+        }
+    }
+
+    scrollToFeatures() {
+        const featuresSection = document.getElementById('features');
+        if (featuresSection) {
+            featuresSection.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    }
+
     addFeedbackModal() {
-        // Add feedback modal to the page
         const modalHTML = this.userFeedback.createDetailedFeedbackModal();
         document.body.insertAdjacentHTML('beforeend', modalHTML);
     }
 
-    switchFeature(featureName) {
-        // Hide all feature sections
-        document.querySelectorAll('.feature-section').forEach(section => {
-            section.style.display = 'none';
-        });
-
-        // Hide original sections
-        document.getElementById('uploadSection').style.display = 'none';
-        document.getElementById('loadingSection').style.display = 'none';
-        document.getElementById('resultsSection').style.display = 'none';
-
-        // Show selected feature
-        switch (featureName) {
-            case 'analyzer':
-                document.getElementById('uploadSection').style.display = 'block';
-                if (this.currentAnalysis) {
-                    document.getElementById('resultsSection').style.display = 'block';
-                }
-                break;
-            case 'builder':
-                document.getElementById('builderSection').style.display = 'block';
-                break;
-            case 'cover-letter':
-                document.getElementById('coverLetterSection').style.display = 'block';
-                break;
-            case 'interview':
-                document.getElementById('interviewSection').style.display = 'block';
-                break;
-        }
-    }
-
-    switchEnhancedTab(tabButton, tabName) {
-        const container = tabButton.closest('.feature-section');
-        if (!container) return;
-
-        // Update tab buttons
-        container.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.classList.remove('active');
-        });
-        tabButton.classList.add('active');
-
-        // Update tab content
-        container.querySelectorAll('.tab-content').forEach(content => {
-            content.classList.remove('active');
-        });
-        container.querySelector(`#${tabName}Tab`)?.classList.add('active');
-    }
-
     handleFileUpload(file) {
         if (file.size > 10 * 1024 * 1024) { // 10MB limit
-            alert('File size too large. Please upload a file smaller than 10MB.');
+            this.showToast('File size too large. Please upload a file smaller than 10MB.', 'error');
             return;
         }
 
         const uploadContent = document.querySelector('.upload-content');
         if (uploadContent) {
             uploadContent.innerHTML = `
-                <div class="upload-icon-large">✅</div>
-                <p><strong>${file.name}</strong> uploaded successfully</p>
-                <small>File size: ${(file.size / 1024 / 1024).toFixed(2)} MB</small>
+                <div class="upload-icon-large">
+                    <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <h3><strong>${file.name}</strong> uploaded successfully</h3>
+                <p>File size: ${(file.size / 1024 / 1024).toFixed(2)} MB</p>
+                <small>Ready for analysis</small>
             `;
+            uploadContent.classList.add('success');
         }
 
         const analyzeBtn = document.getElementById('analyzeBtn');
         if (analyzeBtn) {
             analyzeBtn.disabled = false;
         }
+
+        // Update progress indicator
+        this.updateProgressStep('upload', 'completed');
+        this.updateProgressStep('analyze', 'active');
+
+        this.showToast('Resume uploaded successfully!', 'success');
     }
 
     handleJobTypeChange(e) {
@@ -282,13 +292,16 @@ class SmartResumeAnalyzer {
         const selectedJobType = Array.from(jobTypeRadios).find(radio => radio.checked)?.value;
 
         if (!fileInput?.files[0]) {
-            alert('Please upload a resume first.');
+            this.showToast('Please upload a resume first.', 'error');
             return;
         }
 
+        // Update progress
+        this.updateProgressStep('analyze', 'active');
+        
         // Show loading section
         this.showSection('loadingSection');
-        this.simulateLoadingSteps();
+        this.simulateLoadingProgress();
 
         try {
             // Extract text from PDF
@@ -302,7 +315,7 @@ class SmartResumeAnalyzer {
             } else {
                 const jobDescription = document.getElementById('jobDescription')?.value;
                 if (!jobDescription?.trim()) {
-                    alert('Please enter a job description.');
+                    this.showToast('Please enter a job description.', 'error');
                     this.showSection('uploadSection');
                     return;
                 }
@@ -319,49 +332,79 @@ class SmartResumeAnalyzer {
             // Store job data for other features
             this.currentJobData = jobData;
 
-            // Display results
+            // Display results after loading animation
             setTimeout(() => {
+                this.updateProgressStep('analyze', 'completed');
+                this.updateProgressStep('results', 'active');
                 this.displayResults();
                 this.showSection('resultsSection');
-            }, 2000);
+                this.showToast('Analysis completed successfully!', 'success');
+            }, 3000);
 
         } catch (error) {
             console.error('Analysis error:', error);
-            alert('Error analyzing resume. Please try again.');
+            this.showToast('Error analyzing resume. Please try again.', 'error');
             this.showSection('uploadSection');
+            this.updateProgressStep('analyze', 'active');
         }
     }
 
-    simulateLoadingSteps() {
-        const steps = document.querySelectorAll('.step');
+    simulateLoadingProgress() {
+        const progressFill = document.getElementById('loadingProgress');
+        const progressText = document.getElementById('progressText');
+        const steps = document.querySelectorAll('.loading-steps .step');
+        
+        let progress = 0;
         let currentStep = 0;
 
         const interval = setInterval(() => {
-            if (currentStep > 0) {
-                steps[currentStep - 1]?.classList.remove('active');
+            progress += Math.random() * 15 + 5;
+            if (progress > 100) progress = 100;
+
+            if (progressFill) {
+                progressFill.style.width = `${progress}%`;
             }
-            if (currentStep < steps.length) {
-                steps[currentStep]?.classList.add('active');
-                currentStep++;
-            } else {
+            if (progressText) {
+                progressText.textContent = `${Math.round(progress)}%`;
+            }
+
+            // Update steps
+            const stepProgress = Math.floor((progress / 100) * steps.length);
+            if (stepProgress > currentStep && currentStep < steps.length) {
+                if (steps[currentStep]) {
+                    steps[currentStep].classList.remove('active');
+                }
+                currentStep = stepProgress;
+                if (steps[currentStep]) {
+                    steps[currentStep].classList.add('active');
+                }
+            }
+
+            if (progress >= 100) {
                 clearInterval(interval);
             }
-        }, 500);
+        }, 200);
+    }
+
+    updateProgressStep(step, status) {
+        const stepElement = document.querySelector(`[data-step="${step}"]`);
+        if (stepElement) {
+            stepElement.classList.remove('active', 'completed');
+            stepElement.classList.add(status);
+        }
     }
 
     displayResults() {
         const analysis = this.currentAnalysis;
 
-        // Update score cards
-        const overallScore = document.getElementById('overallScore');
-        const skillMatch = document.getElementById('skillMatch');
-        const keywordsFound = document.getElementById('keywordsFound');
-        const readabilityScore = document.getElementById('readabilityScore');
+        // Update score cards with animation
+        this.animateScoreCard('overallScore', analysis.overallScore, 100);
+        this.animateScoreCard('skillMatch', analysis.skillMatchPercentage, 100, '%');
+        this.animateScoreCard('keywordsFound', analysis.matchedKeywords.length, analysis.matchedKeywords.length);
+        this.animateScoreCard('readabilityScore', analysis.readabilityScore, 100);
 
-        if (overallScore) overallScore.textContent = analysis.overallScore;
-        if (skillMatch) skillMatch.textContent = `${analysis.skillMatchPercentage.toFixed(1)}%`;
-        if (keywordsFound) keywordsFound.textContent = analysis.matchedKeywords.length;
-        if (readabilityScore) readabilityScore.textContent = analysis.readabilityScore.toFixed(1);
+        // Update progress bars
+        this.updateProgressBar('overallProgress', analysis.overallScore);
 
         // Populate skills analysis
         this.populateSkillsAnalysis(analysis);
@@ -377,6 +420,48 @@ class SmartResumeAnalyzer {
 
         // Generate report preview
         this.generateReportPreview();
+
+        // Add entrance animations
+        setTimeout(() => {
+            document.querySelectorAll('.score-card').forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('animate-in');
+                }, index * 100);
+            });
+        }, 500);
+    }
+
+    animateScoreCard(elementId, targetValue, maxValue, suffix = '') {
+        const element = document.getElementById(elementId);
+        if (!element) return;
+
+        let currentValue = 0;
+        const increment = targetValue / 50;
+        const duration = 1500;
+        const stepTime = duration / 50;
+
+        const timer = setInterval(() => {
+            currentValue += increment;
+            if (currentValue >= targetValue) {
+                currentValue = targetValue;
+                clearInterval(timer);
+            }
+            
+            if (suffix === '%') {
+                element.textContent = `${Math.round(currentValue)}${suffix}`;
+            } else {
+                element.textContent = Math.round(currentValue);
+            }
+        }, stepTime);
+    }
+
+    updateProgressBar(elementId, percentage) {
+        const element = document.getElementById(elementId);
+        if (element) {
+            setTimeout(() => {
+                element.style.width = `${percentage}%`;
+            }, 500);
+        }
     }
 
     populateSkillsAnalysis(analysis) {
@@ -384,15 +469,22 @@ class SmartResumeAnalyzer {
         const missingSkillsContainer = document.getElementById('missingSkills');
         const foundKeywordsContainer = document.getElementById('foundKeywords');
         const missingKeywordsContainer = document.getElementById('missingKeywords');
+        const matchedSkillsCount = document.getElementById('matchedSkillsCount');
+        const missingSkillsCount = document.getElementById('missingSkillsCount');
+
+        // Update counts
+        if (matchedSkillsCount) matchedSkillsCount.textContent = analysis.matchedSkills.length;
+        if (missingSkillsCount) missingSkillsCount.textContent = analysis.missingSkills.length;
 
         // Matched skills
         if (matchedSkillsContainer) {
             matchedSkillsContainer.innerHTML = '';
             if (analysis.matchedSkills.length > 0) {
-                analysis.matchedSkills.forEach(skill => {
+                analysis.matchedSkills.forEach((skill, index) => {
                     const skillElement = document.createElement('div');
                     skillElement.className = 'skill-item';
                     skillElement.textContent = `✓ ${skill}`;
+                    skillElement.style.animationDelay = `${index * 50}ms`;
                     matchedSkillsContainer.appendChild(skillElement);
                 });
             } else {
@@ -404,10 +496,11 @@ class SmartResumeAnalyzer {
         if (missingSkillsContainer) {
             missingSkillsContainer.innerHTML = '';
             if (analysis.missingSkills.length > 0) {
-                analysis.missingSkills.slice(0, 10).forEach(skill => {
+                analysis.missingSkills.slice(0, 10).forEach((skill, index) => {
                     const skillElement = document.createElement('div');
                     skillElement.className = 'skill-item missing';
                     skillElement.textContent = `✗ ${skill}`;
+                    skillElement.style.animationDelay = `${index * 50}ms`;
                     missingSkillsContainer.appendChild(skillElement);
                 });
             } else {
@@ -489,9 +582,10 @@ class SmartResumeAnalyzer {
             { name: 'Projects', present: analysis.hasProjects, quality: analysis.projectsQuality }
         ];
 
-        sections.forEach(section => {
+        sections.forEach((section, index) => {
             const sectionDiv = document.createElement('div');
             sectionDiv.className = 'section-item';
+            sectionDiv.style.animationDelay = `${index * 100}ms`;
 
             const nameSpan = document.createElement('span');
             nameSpan.className = 'section-name';
@@ -517,112 +611,29 @@ class SmartResumeAnalyzer {
         preview.textContent = reportText;
     }
 
-    generateCoverLetter() {
-        const template = document.getElementById('coverLetterTemplate')?.value || 'professional';
-        const companyName = document.getElementById('companyName')?.value || '';
-        const jobTitle = document.getElementById('jobTitle')?.value || '';
-        const additionalInfo = document.getElementById('additionalInfo')?.value || '';
-
-        if (!companyName || !jobTitle) {
-            alert('Please enter company name and job title.');
-            return;
-        }
-
-        // Get resume data from builder or current analysis
-        const resumeData = this.resumeBuilder.exportResumeData();
-        
-        // Create job data object
-        const jobData = {
-            company: companyName,
-            title: jobTitle,
-            ...this.currentJobData
-        };
-
-        // Generate cover letter
-        const coverLetter = this.coverLetterGenerator.generateCoverLetter(resumeData, jobData, template);
-
-        // Display result
-        const output = document.getElementById('coverLetterOutput');
-        const content = document.getElementById('coverLetterContent');
-        
-        if (output && content) {
-            content.textContent = coverLetter;
-            output.style.display = 'block';
-        }
-
-        // Setup output actions
-        this.setupCoverLetterActions(coverLetter);
-    }
-
-    setupCoverLetterActions(coverLetter) {
-        document.getElementById('copyCoverLetterBtn')?.addEventListener('click', () => {
-            navigator.clipboard.writeText(coverLetter).then(() => {
-                alert('Cover letter copied to clipboard!');
-            });
-        });
-
-        document.getElementById('downloadCoverLetterBtn')?.addEventListener('click', () => {
-            const blob = new Blob([coverLetter], { type: 'text/plain' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'cover_letter.txt';
-            a.click();
-            URL.revokeObjectURL(url);
-        });
-    }
-
-    generateInterviewQuestions() {
-        const jobRole = document.getElementById('interviewJobRole')?.value || 'software-engineer';
-        const interviewType = document.getElementById('interviewType')?.value || 'mixed';
-        const questionCount = parseInt(document.getElementById('questionCount')?.value) || 10;
-
-        // Get resume data
-        const resumeData = this.resumeBuilder.exportResumeData();
-
-        // Generate questions
-        const questions = this.interviewPrep.generateInterviewQuestions(resumeData, jobRole, interviewType);
-        const selectedQuestions = questions.slice(0, questionCount);
-
-        // Display questions
-        this.interviewPrep.populateQuestions(selectedQuestions);
-        this.interviewPrep.populateTips();
-
-        // Show prep content
-        const prepContent = document.getElementById('prepContent');
-        if (prepContent) {
-            prepContent.style.display = 'block';
-        }
-
-        // Store questions for practice mode
-        this.currentInterviewQuestions = selectedQuestions;
-    }
-
-    startInterviewPractice() {
-        if (!this.currentInterviewQuestions) {
-            alert('Please generate questions first.');
-            return;
-        }
-
-        this.interviewPrep.startPracticeMode(this.currentInterviewQuestions);
-    }
-
-    nextPracticeQuestion() {
-        this.interviewPrep.nextPracticeQuestion();
-    }
-
     switchTab(tabName) {
         // Update tab buttons
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.classList.remove('active');
+            btn.setAttribute('aria-selected', 'false');
         });
-        document.querySelector(`[data-tab="${tabName}"]`)?.classList.add('active');
+        const activeTab = document.querySelector(`[data-tab="${tabName}"]`);
+        if (activeTab) {
+            activeTab.classList.add('active');
+            activeTab.setAttribute('aria-selected', 'true');
+        }
 
         // Update tab content
         document.querySelectorAll('.tab-content').forEach(content => {
             content.classList.remove('active');
         });
-        document.getElementById(`${tabName}Tab`)?.classList.add('active');
+        const activeContent = document.getElementById(`${tabName}Tab`);
+        if (activeContent) {
+            activeContent.classList.add('active');
+        }
+
+        // Announce tab change to screen readers
+        this.announceToScreenReader(`Switched to ${tabName} tab`);
     }
 
     showSection(sectionId) {
@@ -635,7 +646,10 @@ class SmartResumeAnalyzer {
 
         // Show target section
         const targetSection = document.getElementById(sectionId);
-        if (targetSection) targetSection.style.display = 'block';
+        if (targetSection) {
+            targetSection.style.display = 'block';
+            targetSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
     }
 
     resetAnalysis() {
@@ -654,14 +668,27 @@ class SmartResumeAnalyzer {
         const uploadContent = document.querySelector('.upload-content');
         if (uploadContent) {
             uploadContent.innerHTML = `
-                <div class="upload-icon-large">📄</div>
-                <p>Drag & drop your PDF resume here or <span class="upload-link">browse files</span></p>
+                <div class="upload-icon-large">
+                    <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                </div>
+                <h3>Drag & drop your PDF resume here</h3>
+                <p>or <span class="upload-link">browse files</span></p>
                 <small>Supports PDF files up to 10MB</small>
             `;
+            uploadContent.classList.remove('success');
         }
+
+        // Reset progress indicator
+        this.updateProgressStep('upload', 'active');
+        this.updateProgressStep('analyze', '');
+        this.updateProgressStep('results', '');
 
         // Show upload section
         this.showSection('uploadSection');
+        
+        this.showToast('Ready for new analysis', 'success');
     }
 
     async downloadPdfReport() {
@@ -677,9 +704,11 @@ class SmartResumeAnalyzer {
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
+            
+            this.showToast('PDF report downloaded successfully!', 'success');
         } catch (error) {
             console.error('Error generating PDF:', error);
-            alert('Error generating PDF report. Please try again.');
+            this.showToast('Error generating PDF report. Please try again.', 'error');
         }
     }
 
@@ -690,7 +719,7 @@ class SmartResumeAnalyzer {
         
         try {
             await navigator.clipboard.writeText(reportText);
-            alert('Report copied to clipboard!');
+            this.showToast('Report copied to clipboard!', 'success');
         } catch (error) {
             console.error('Error copying to clipboard:', error);
             // Fallback: select text in preview
@@ -700,8 +729,70 @@ class SmartResumeAnalyzer {
                 range.selectNode(preview);
                 window.getSelection()?.removeAllRanges();
                 window.getSelection()?.addRange(range);
-                alert('Report text selected. Press Ctrl+C to copy.');
+                this.showToast('Report text selected. Press Ctrl+C to copy.', 'warning');
             }
+        }
+    }
+
+    async shareResults() {
+        if (!this.currentAnalysis) return;
+
+        const shareData = {
+            title: 'My Resume Analysis Results',
+            text: `I just analyzed my resume with ResumeAI Pro and got a score of ${this.currentAnalysis.overallScore}/100!`,
+            url: window.location.href
+        };
+
+        try {
+            if (navigator.share) {
+                await navigator.share(shareData);
+                this.showToast('Results shared successfully!', 'success');
+            } else {
+                // Fallback: copy URL to clipboard
+                await navigator.clipboard.writeText(window.location.href);
+                this.showToast('Link copied to clipboard!', 'success');
+            }
+        } catch (error) {
+            console.error('Error sharing:', error);
+            this.showToast('Unable to share results', 'error');
+        }
+    }
+
+    showToast(message, type = 'info') {
+        const toastContainer = document.getElementById('toastContainer');
+        if (!toastContainer) return;
+
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        toast.innerHTML = `
+            <div class="toast-content">
+                <span class="toast-message">${message}</span>
+                <button class="toast-close" onclick="this.parentElement.parentElement.remove()">×</button>
+            </div>
+        `;
+
+        toastContainer.appendChild(toast);
+
+        // Show toast
+        setTimeout(() => toast.classList.add('show'), 100);
+
+        // Auto remove after 5 seconds
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 300);
+        }, 5000);
+
+        // Announce to screen readers
+        this.announceToScreenReader(message);
+    }
+
+    announceToScreenReader(message) {
+        const liveRegion = document.getElementById('live-region');
+        if (liveRegion) {
+            liveRegion.textContent = message;
+            setTimeout(() => {
+                liveRegion.textContent = '';
+            }, 1000);
         }
     }
 }
