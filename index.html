@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Resume Analyzer & Optimizer</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📄</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./src/styles/main.css">
+    <link rel="stylesheet" href="./src/styles/enhanced-features.css">
+    
+    <!-- Accessibility improvements -->
+    <meta name="description" content="AI-powered resume analyzer that helps job seekers optimize their resumes, generate cover letters, and prepare for interviews">
+    <meta name="keywords" content="resume analyzer, job search, career tools, interview preparation, cover letter generator">
+    <meta name="author" content="Smart Resume Analyzer">
+    
+    <!-- Open Graph meta tags -->
+    <meta property="og:title" content="Smart Resume Analyzer & Optimizer">
+    <meta property="og:description" content="AI-powered resume analysis to boost your job search success">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://endearing-cuchufli-9d1e2e.netlify.app/">
+    
+    <!-- Accessibility -->
+    <meta name="theme-color" content="#667eea">
+</head>
+<body>
+    <div id="app">
+        <!-- Skip to main content link for accessibility -->
+        <a href="#main-content" class="skip-link">Skip to main content</a>
+        
+        <!-- Header -->
+        <header class="header" role="banner">
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo">
+                        <span class="logo-icon" role="img" aria-label="Document icon">📄</span>
+                        <h1>Smart Resume Analyzer</h1>
+                    </div>
+                    <p class="tagline">AI-Powered Resume Analysis to Boost Your Job Search Success</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main" role="main" id="main-content">
+            <div class="container">
+                <!-- Upload Section -->
+                <section class="upload-section" id="uploadSection" aria-labelledby="upload-heading">
+                    <div class="upload-card">
+                        <div class="upload-icon" role="img" aria-label="Upload icon">📤</div>
+                        <h2 id="upload-heading">Upload Your Resume</h2>
+                        <p>Upload your PDF resume to get instant AI-powered analysis and feedback</p>
+                        
+                        <div class="upload-area" id="uploadArea" role="button" tabindex="0" 
+                             aria-label="Upload resume file area. Click to browse files or drag and drop a PDF file here">
+                            <input type="file" id="resumeFile" accept=".pdf" hidden aria-label="Resume file input">
+                            <div class="upload-content">
+                                <div class="upload-icon-large" role="img" aria-label="Document icon">📄</div>
+                                <p>Drag & drop your PDF resume here or <span class="upload-link">browse files</span></p>
+                                <small>Supports PDF files up to 10MB</small>
+                            </div>
+                        </div>
+
+                        <!-- Job Role Selection -->
+                        <div class="job-selection">
+                            <h3>Select Target Job Role</h3>
+                            <div class="job-options" role="radiogroup" aria-labelledby="job-type-heading">
+                                <h4 id="job-type-heading" class="sr-only">Job analysis type</h4>
+                                <label class="radio-option">
+                                    <input type="radio" name="jobType" value="predefined" checked aria-describedby="predefined-desc">
+                                    <span>Predefined Job Role</span>
+                                </label>
+                                <span id="predefined-desc" class="sr-only">Choose from common job roles with predefined requirements</span>
+                                
+                                <label class="radio-option">
+                                    <input type="radio" name="jobType" value="custom" aria-describedby="custom-desc">
+                                    <span>Custom Job Description</span>
+                                </label>
+                                <span id="custom-desc" class="sr-only">Paste a specific job description for targeted analysis</span>
+                            </div>
+
+                            <div class="job-role-selector" id="predefinedRoles">
+                                <label for="jobRoleSelect" class="sr-only">Select job role</label>
+                                <select id="jobRoleSelect" aria-label="Select target job role">
+                                    <option value="software-engineer">Software Engineer</option>
+                                    <option value="data-scientist">Data Scientist</option>
+                                    <option value="product-manager">Product Manager</option>
+                                    <option value="marketing-manager">Marketing Manager</option>
+                                    <option value="business-analyst">Business Analyst</option>
+                                    <option value="ui-ux-designer">UI/UX Designer</option>
+                                    <option value="devops-engineer">DevOps Engineer</option>
+                                    <option value="project-manager">Project Manager</option>
+                                </select>
+                            </div>
+
+                            <div class="custom-job-input" id="customJobInput" style="display: none;">
+                                <label for="jobDescription" class="sr-only">Job description</label>
+                                <textarea id="jobDescription" placeholder="Paste the complete job description here..." rows="6" 
+                                         aria-label="Enter custom job description"></textarea>
+                            </div>
+                        </div>
+
+                        <button class="analyze-btn" id="analyzeBtn" disabled aria-describedby="analyze-btn-desc">
+                            <span class="btn-icon" role="img" aria-label="Rocket icon">🚀</span>
+                            Analyze Resume
+                        </button>
+                        <span id="analyze-btn-desc" class="sr-only">Start AI-powered analysis of your resume against the selected job requirements</span>
+                    </div>
+                </section>
+
+                <!-- Loading Section -->
+                <section class="loading-section" id="loadingSection" style="display: none;" aria-labelledby="loading-heading">
+                    <div class="loading-card">
+                        <div class="loading-spinner" role="status" aria-label="Loading"></div>
+                        <h3 id="loading-heading">Analyzing Your Resume...</h3>
+                        <p>Our AI is examining your resume and comparing it with job requirements</p>
+                        <div class="loading-steps" role="status" aria-live="polite">
+                            <div class="step active">📄 Extracting text from PDF</div>
+                            <div class="step">🔍 Analyzing content structure</div>
+                            <div class="step">🎯 Matching skills and keywords</div>
+                            <div class="step">📊 Generating insights</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Results Section -->
+                <section class="results-section" id="resultsSection" style="display: none;" aria-labelledby="results-heading">
+                    <div class="results-header">
+                        <h2 id="results-heading">📊 Analysis Results</h2>
+                        <button class="new-analysis-btn" id="newAnalysisBtn" aria-label="Start new resume analysis">
+                            <span role="img" aria-label="Refresh icon">🔄</span>
+                            New Analysis
+                        </button>
+                    </div>
+
+                    <!-- Score Cards -->
+                    <div class="score-cards" role="region" aria-labelledby="scores-heading">
+                        <h3 id="scores-heading" class="sr-only">Resume analysis scores</h3>
+                        <div class="score-card primary" role="img" aria-labelledby="overall-score-label">
+                            <div class="score-value" id="overallScore">0</div>
+                            <div class="score-label" id="overall-score-label">Overall Score</div>
+                            <div class="score-subtitle">out of 100</div>
+                        </div>
+                        <div class="score-card" role="img" aria-labelledby="skill-match-label">
+                            <div class="score-value" id="skillMatch">0%</div>
+                            <div class="score-label" id="skill-match-label">Skill Match</div>
+                            <div class="score-subtitle">vs requirements</div>
+                        </div>
+                        <div class="score-card" role="img" aria-labelledby="keywords-found-label">
+                            <div class="score-value" id="keywordsFound">0</div>
+                            <div class="score-label" id="keywords-found-label">Keywords Found</div>
+                            <div class="score-subtitle">relevant terms</div>
+                        </div>
+                        <div class="score-card" role="img" aria-labelledby="readability-label">
+                            <div class="score-value" id="readabilityScore">0</div>
+                            <div class="score-label" id="readability-label">Readability</div>
+                            <div class="score-subtitle">clarity score</div>
+                        </div>
+                    </div>
+
+                    <!-- Analysis Tabs -->
+                    <div class="analysis-tabs">
+                        <div class="tab-buttons" role="tablist" aria-label="Analysis sections">
+                            <button class="tab-btn active" data-tab="skills" role="tab" aria-selected="true" aria-controls="skillsTab">🎯 Skills Analysis</button>
+                            <button class="tab-btn" data-tab="suggestions" role="tab" aria-selected="false" aria-controls="suggestionsTab">💡 Suggestions</button>
+                            <button class="tab-btn" data-tab="insights" role="tab" aria-selected="false" aria-controls="insightsTab">📈 Insights</button>
+                            <button class="tab-btn" data-tab="report" role="tab" aria-selected="false" aria-controls="reportTab">📄 Report</button>
+                        </div>
+
+                        <!-- Skills Tab -->
+                        <div class="tab-content active" id="skillsTab" role="tabpanel" aria-labelledby="skills-tab">
+                            <div class="skills-analysis">
+                                <div class="skills-column">
+                                    <h3 class="skills-title success">✅ Matched Skills</h3>
+                                    <div class="skills-list" id="matchedSkills" role="list" aria-label="Skills found in your resume">
+                                        <!-- Matched skills will be populated here -->
+                                    </div>
+                                </div>
+                                <div class="skills-column">
+                                    <h3 class="skills-title danger">❌ Missing Skills</h3>
+                                    <div class="skills-list" id="missingSkills" role="list" aria-label="Skills missing from your resume">
+                                        <!-- Missing skills will be populated here -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="keywords-analysis">
+                                <h3>🔍 Keywords Analysis</h3>
+                                <div class="keywords-grid">
+                                    <div class="keywords-section">
+                                        <h4>Found Keywords</h4>
+                                        <div class="keywords-tags" id="foundKeywords" role="list" aria-label="Keywords found in your resume"></div>
+                                    </div>
+                                    <div class="keywords-section">
+                                        <h4>Missing Keywords</h4>
+                                        <div class="keywords-tags" id="missingKeywords" role="list" aria-label="Keywords missing from your resume"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Suggestions Tab -->
+                        <div class="tab-content" id="suggestionsTab" role="tabpanel" aria-labelledby="suggestions-tab">
+                            <div class="suggestions-container" id="suggestionsContainer">
+                                <!-- Suggestions will be populated here -->
+                            </div>
+                        </div>
+
+                        <!-- Insights Tab -->
+                        <div class="tab-content" id="insightsTab" role="tabpanel" aria-labelledby="insights-tab">
+                            <div class="insights-container">
+                                <div class="chart-container">
+                                    <h3>Score Breakdown</h3>
+                                    <canvas id="scoreChart" width="400" height="200" aria-label="Resume score breakdown chart"></canvas>
+                                </div>
+                                <div class="section-analysis" id="sectionAnalysis">
+                                    <!-- Section analysis will be populated here -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Report Tab -->
+                        <div class="tab-content" id="reportTab" role="tabpanel" aria-labelledby="report-tab">
+                            <div class="report-container">
+                                <h3>📄 Generate Report</h3>
+                                <p>Download a comprehensive analysis report of your resume</p>
+                                
+                                <div class="report-options">
+                                    <button class="report-btn" id="downloadPdfBtn" aria-describedby="pdf-btn-desc">
+                                        <span role="img" aria-label="Download icon">📥</span>
+                                        Download PDF Report
+                                    </button>
+                                    <span id="pdf-btn-desc" class="sr-only">Download a PDF version of your resume analysis</span>
+                                    
+                                    <button class="report-btn secondary" id="copyReportBtn" aria-describedby="copy-btn-desc">
+                                        <span role="img" aria-label="Copy icon">📋</span>
+                                        Copy Text Summary
+                                    </button>
+                                    <span id="copy-btn-desc" class="sr-only">Copy the analysis summary to clipboard</span>
+                                </div>
+
+                                <div class="report-preview" id="reportPreview" aria-label="Report preview">
+                                    <!-- Report preview will be shown here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer" role="contentinfo">
+            <div class="container">
+                <p>&copy; 2025 Smart Resume Analyzer. Built with ❤️ for job seekers worldwide.</p>
+                <p>
+                    <button onclick="window.userFeedback?.openFeedbackModal('general', 'footer')" 
+                            class="feedback-link" aria-label="Provide feedback about this application">
+                        📝 Give Feedback
+                    </button>
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Live regions for screen reader announcements -->
+    <div id="live-region" aria-live="polite" aria-atomic="true" class="sr-only"></div>
+    <div id="assertive-live-region" aria-live="assertive" aria-atomic="true" class="sr-only"></div>
+
+    <script type="module" src="./src/js/main.js"></script>
+</body>
+</html>
