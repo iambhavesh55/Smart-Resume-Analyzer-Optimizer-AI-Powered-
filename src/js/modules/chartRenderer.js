@@ -5,9 +5,11 @@ export class ChartRenderer {
     }
 
     async initializeChart() {
-        // Import Chart.js
-        const ChartJS = await import('https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js');
-        this.Chart = ChartJS;
+        // Import Chart.js UMD bundle
+        await import('https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js');
+        
+        // Access Chart from global window object (UMD exposes it there)
+        this.Chart = window.Chart;
         
         // Register required components
         this.Chart.register(...this.Chart.registerables);
